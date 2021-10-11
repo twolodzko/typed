@@ -23,9 +23,7 @@ class _Typed:
                 continue
 
             if not isinstance(argument, annotation):
-                raise TypeError(
-                    f"For argument {name}={argument} expected type {annotation}, got {type(argument)}"
-                )
+                raise TypeError(f"For argument {name}={argument} expected type {annotation}, got {type(argument)}")
 
     def __call__(self, *args, **kwargs) -> Any:
         self.validate_arguments(*args, **kwargs)

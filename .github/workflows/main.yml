@@ -26,10 +26,7 @@ jobs:
         run: pip install pytest mypy black flake8
         
       - name: Run linters
-        run: |
-          black --line-length 120 --check .
-          flake8 --max-line-length 120 .
-          mypy .
+        run: make lint
       
       - name: Run unit tests
-        run: pytest -v .
+        run: make test
