@@ -2,7 +2,7 @@
 LINE_LENGTH := 120
 
 test: ## Run unit tests
-	pytest -v .
+	pytest --doctest-modules -v .
 
 lint: ## Run linters
 	black --line-length $(LINE_LENGTH) --check .
