@@ -2,31 +2,31 @@ name: CI
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [ '3.7', '3.8', '3.9', '3.10' ]
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
     name: Python ${{ matrix.python-version }}
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Setup python
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
           architecture: x64
-      
+
       - name: Install dependencies
-        run: pip install pytest mypy black flake8
-        
+        run: pip install pytest mypy black flake8 types-setuptools types-toml
+
       - name: Run linters
         run: make lint
-      
+
       - name: Run unit tests
         run: make test
