@@ -1,5 +1,5 @@
 from inspect import Parameter, signature
-from typing import Any, Callable
+from typing import Any, Callable, Iterable, Tuple
 
 
 class _Typed:
@@ -14,14 +14,7 @@ class _Typed:
 
         :raises TypeError: When argument passed to the function is inconsistent with type annotation
         """
-        for idx, (name, parameter) in enumerate(self.parameters.items()):
-            if name in kwargs:
-                argument = kwargs[name]
-            elif idx < len(args):
-                argument = args[idx]
-            else:
-                break
-
+        for name, argument in self.arguments_iterator(*args, **kwargs):
             annotation = self.parameters[name].annotation
 
             if annotation is Parameter.empty:
@@ -30,6 +23,13 @@ class _Typed:
 
             if not isinstance(argument, annotation):
                 raise TypeError(f"For argument {name}={argument} expected type {annotation}, got {type(argument)}")
+
+    def arguments_iterator(self, *args, **kwargs) -> Iterable[Tuple[str, Any]]:
+        """Iterate over function arguments"""
+        for i, arg in enumerate(args):
+            yield list(self.parameters.keys())[i], arg
+        for name, arg in kwargs.items():
+            yield name, arg
 
     def __call__(self, *args, **kwargs) -> Any:
         """Call the `self.func` function"""

@@ -1,6 +1,8 @@
 
 LINE_LENGTH := 120
 
+.PHONY: test lint stylefix help
+
 test: ## Run unit tests
 	pytest --doctest-modules -v .
 

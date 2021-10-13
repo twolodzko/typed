@@ -124,3 +124,29 @@ def test_class():
     # invalid type
     with pytest.raises(TypeError):
         obj.func(1, 2)
+
+
+def test_many_arguments():
+
+    @typed
+    def func(a, b, c: int, d: str, e: int = 5, f: str = "6", *, g: int = 7, h: str = "8"):
+        return a, b, c, d, e, f, g, h
+
+    # valid type
+    assert func(1, "2", 3, "4") == (1, "2", 3, "4", 5, "6", 7, "8")
+
+    # invalid type
+    with pytest.raises(TypeError):
+        func(1, "2", "3", "4")
+
+    with pytest.raises(TypeError):
+        func(1, "2", 3, 4)
+
+    with pytest.raises(TypeError):
+        func(1, "2", 3, "4", "5")
+
+    with pytest.raises(TypeError):
+        func(1, "2", 3, "4", e = "5")
+
+    with pytest.raises(TypeError):
+        func(1, "2", 3, "4", g = 7, e = 5, h = 8)
