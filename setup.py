@@ -9,4 +9,5 @@ setup(
     author_email="twolodzko+typed@gmail.com",
     license="MIT",
     py_modules=["typed"],
+    python_requires=">=3.8.0",
 )
