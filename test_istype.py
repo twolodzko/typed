@@ -1,5 +1,6 @@
-from types import NoneType
 from istype import istype
+
+NoneType = type(None)
 
 
 def test_simple_types():
