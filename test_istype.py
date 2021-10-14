@@ -15,7 +15,6 @@ def test_simple_types():
 
 
 def test_user_defined_class():
-
     class DummyClass:
         ...
 
