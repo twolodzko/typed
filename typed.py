@@ -1,5 +1,6 @@
 from inspect import Parameter, signature
 from typing import Any, Callable, Iterable, Tuple
+from istype import istype
 
 
 class _Typed:
@@ -21,7 +22,7 @@ class _Typed:
                 # skip, parameter was not annotated
                 continue
 
-            if not isinstance(argument, annotation):
+            if not istype(argument, annotation):
                 raise TypeError(f"For argument {name}={argument} expected type {annotation}, got {type(argument)}")
 
     def arguments_iterator(self, *args, **kwargs) -> Iterable[Tuple[str, Any]]:
